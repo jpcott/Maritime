@@ -1,0 +1,47 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <div>
+        @Html.LabelFor(m => m.Mean)
+        @Html.DisplayFor(m => m.Mean)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.StandardDeviation)
+        @Html.DisplayFor(m => m.StandardDeviation)
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Banding
+                    </th>
+                    <th>
+                        Frequency
+                    </th>
+                </tr>
+            </thead>
+            @foreach (var item in Model.FrequencyDistribution)
+            {
+                <tr>
+                    <td>
+                        @Html.Raw($"{item.Key.Item1} to {item.Key.Item2}")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Value)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    @using (@Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div>
+            <input type="file" name="file" id="file" />
+            <input type="submit" value="Upload CSV" />
+        </div>
+    }
+</div>
